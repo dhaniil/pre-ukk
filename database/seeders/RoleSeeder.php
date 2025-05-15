@@ -18,7 +18,7 @@ class RoleSeeder extends Seeder
     {
         // Admin Data
         $name = 'Admin';
-        $email = 'admin@stembayo.sch.id';
+        $email = 'admin@ilazer.me';
         $password = '12345678';
 
         // Create Role
@@ -30,6 +30,8 @@ class RoleSeeder extends Seeder
         ]);
 
         $superAdminRole = Role::create(['name' => 'super_admin', 'guard_name' => 'web']);
+        
+        $superAdminRole->givePermissionTo(\Spatie\Permission\Models\Permission::all());
         $user->assignRole($superAdminRole);
     }
 }

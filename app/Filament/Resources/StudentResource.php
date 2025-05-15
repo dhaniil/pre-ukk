@@ -15,6 +15,7 @@ use Filament\Tables;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TrashedFilter;
@@ -102,7 +103,7 @@ class StudentResource extends Resource
                         return 'danger';
                     }
                 }),
-                TextColumn::make('status_pkl')
+                TextColumn::make('status_pkl'),
 
             ])
             ->filters([

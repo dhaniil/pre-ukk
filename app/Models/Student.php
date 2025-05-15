@@ -12,9 +12,9 @@ class Student extends Model
     protected $guard_name = 'web';
     protected $fillable = ['name', 'gender', 'address', 'contact', 'email', 'nis', 'status_pkl'];
 
-    public function internship()
+    public function internships()
     {
-        return $this->belongsTo(Internship::class);
+        return $this->hasMany(Internship::class);
     }
 
     public function industry()

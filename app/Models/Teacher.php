@@ -12,7 +12,7 @@ class Teacher extends Model
 
     public function industries()
     {
-        return $this->hasMany(Industries::class);
+        return $this->hasMany(Industries::class, 'guru_pembimbing');
     }
 
     public function internships()

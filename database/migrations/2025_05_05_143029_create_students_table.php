@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedInteger('nis');
+            $table->string('nis');
             $table->enum('gender', ['L', 'P']);
             $table->string('address');
             $table->string('contact');
