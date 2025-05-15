@@ -72,6 +72,15 @@ class StudentSeeder extends Seeder
                 'status_pkl' => 'Aktif',
             ],
             [
+                'name' => 'Farcah Amalia Nugrahaini',
+                'gender' => 'P',
+                'address' => 'Jl. Flamboyan No. 5, Jakarta',
+                'contact' => '081234567006',
+                'email' => '20408@student.stembayo.sch.id',
+                'nis' => '20408',
+                'status_pkl' => 'Aktif',
+            ],
+            [
                 'name' => 'Akbar Ad\'ha Kusumawardhana',
                 'gender' => 'L',
                 'address' => 'Jl. Cempaka No. 40, Jakarta',
@@ -85,7 +94,7 @@ class StudentSeeder extends Seeder
                 'gender' => 'P',
                 'address' => 'Jl. Kenanga No. 45, Jakarta',
                 'contact' => '081234567008',
-                'email' => 'hana.permata@example.com',
+                'email' => '20395@student@stembayo.sch.id',
                 'nis' => '20395',
                 'status_pkl' => 'Tidak Aktif',
             ],
@@ -107,6 +116,7 @@ class StudentSeeder extends Seeder
                 'nis' => '20397',
                 'status_pkl' => 'Tidak Aktif',
             ],
+            
         ];
 
         foreach ($students as $studentData) {
