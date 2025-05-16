@@ -19,23 +19,28 @@ use Illuminate\Contracts\View\View;
 class StudentDashboard extends Page
 {
     protected static string $view = 'filament.pages.student-dashboard';
-    
+
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
     protected static ?string $navigationLabel = 'Dashboard Siswa';
     protected static ?string $title = 'Dashboard PKL Saya';
     protected static ?string $slug = 'student-dashboard';
     protected static ?int $navigationSort = 2;
 
+
     protected function getHeaderActions(): array
     {
-        return [
-            Action::make('create')
-                ->label('Tambah PKL')
-                ->form($this->form(...))
-                ->action(function (array $data): void {
-                    Internship::create($data);
-                })
-        ];
+        if(auth()->user()->role === "student")
+        {
+            return [
+                Action::make('create')
+                    ->label('Tambah PKL')
+                    ->form($this->form(...))
+                    ->action(function (array $data): void {
+                        Internship::create($data);
+                    })
+            ];
+        }
+        return [];
     }
 
     protected function getStudent(): ?Student
@@ -49,7 +54,7 @@ class StudentDashboard extends Page
             ->schema([
                 Hidden::make('student_id')
                     ->default(fn () => $this->getStudent()?->id),
-                
+
                 Select::make('industries_id')
                     ->label('Industri')
                     ->options(Industries::query()->pluck('name', 'id'))
@@ -103,3 +108,4 @@ class StudentDashboard extends Page
     }
 
 }
+

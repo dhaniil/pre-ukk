@@ -25,4 +25,5 @@ Route::get('gsap', App\Livewire\Gsap::class)->name('gsap');
 Route::get('student', App\Livewire\Student\Index::class)->name('student');
 Route::get('luxury-animations', App\Livewire\LuxuryAnimations::class)->name('luxury-animations');
 
+
 require __DIR__.'/auth.php';

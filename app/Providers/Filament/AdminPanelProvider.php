@@ -30,7 +30,7 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->registration()
             ->profile()
-            ->passwordReset(EditProfile::class)
+            ->passwordReset()
             ->sidebarCollapsibleOnDesktop(true)
             ->colors([
                 'primary' => Color::Cyan,

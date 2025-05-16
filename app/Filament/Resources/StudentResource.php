@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+
 use App\Filament\Resources\StudentResource\Pages;
 use App\Filament\Resources\StudentResource\RelationManagers;
 use App\Models\Student;
@@ -10,6 +11,8 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteAction;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\DeleteBulkAction;
@@ -28,8 +31,70 @@ class StudentResource extends Resource
     protected static ?string $model = Student::class;
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
 
+public static function infolist(Infolist $infolist): Infolist
+{
+    return $infolist
+        ->schema([
+            // Personal Information Section
+            \Filament\Infolists\Components\Section::make('Student Details')
+                ->schema([
+                    \Filament\Infolists\Components\Grid::make(2)
+                        ->schema([
+                            TextEntry::make('name')
+                                ->label('Name')
+                                ->weight('bold')
+                                ->size('lg'),
+                            TextEntry::make('nis')
+                                ->label('NIS (Nomor Induk Siswa)')
+                                ->badge(),
+                            TextEntry::make('gender')
+                                ->label('Jenis Kelamin')
+                                ->badge()
+                                ->formatStateUsing(fn (string $state): string => $state === 'L' ? 'Laki-laki' : 'Perempuan')
+                                ->color(fn (string $state): string => $state === 'L' ? 'primary' : 'danger'),
+                            TextEntry::make('status_pkl')
+                                ->label('Status PKL')
+                                ->badge()
+                                ->color(fn (string $state): string => $state === 'Aktif' ? 'success' : 'warning'),
+                        ]),
+                ]),
+
+            \Filament\Infolists\Components\Section::make('Contact Information')
+                ->schema([
+                    \Filament\Infolists\Components\Grid::make(2)
+                        ->schema([
+                            TextEntry::make('address')
+                                ->label('Address')
+                                ->columnSpan(2),
+                            TextEntry::make('contact')
+                                ->label('Phone Number')
+                                ->icon('heroicon-o-phone'),
+                            TextEntry::make('email')
+                                ->label('Email')
+                                ->icon('heroicon-o-envelope')
+                                ->url(fn (string $state): string => "mailto:{$state}"),
+                        ]),
+                ]),
+                
+            // System Information Section (optional)
+            \Filament\Infolists\Components\Section::make('System Information')
+                ->collapsed()
+                ->schema([
+                    \Filament\Infolists\Components\Grid::make(2)
+                        ->schema([
+                            TextEntry::make('created_at')
+                                ->label('Created At')
+                                ->dateTime(),
+                            TextEntry::make('updated_at')
+                                ->label('Last Updated')
+                                ->dateTime(),
+                        ]),
+                ]),
+        ]);
+}
     public static function form(Form $form): Form
     {
+
         return $form
             ->schema([
                 Forms\Components\Section::make('Student Details')
