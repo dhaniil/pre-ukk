@@ -15,5 +15,5 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::apiResource('users', App\Http\Controllers\Api\UserController::class);
-
+Route::apiResource('students', App\Http\Controllers\StudentController::class);
 
