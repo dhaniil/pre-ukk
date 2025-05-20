@@ -22,4 +22,16 @@ class StudentObserver
         $role = Role::firstOrCreate(['name' => 'student', 'guard_name' => 'web']);
         $user->assignRole($role);
     }
+
+    public function updated(Student $student): void
+    {
+        // Update user ketika student diupdate
+        $user = User::where('email', $student->email)->first();
+        if ($user) {
+            $user->update([
+                'name' => $student->name,
+                'email' => $student->email,
+            ]);
+        }
+    }
 }

@@ -17,7 +17,7 @@ class Internship extends Model
 
     public function industries()
     {
-        return $this->belongsTo(Industries::class);
+        return $this->belongsTo(Industries::class, 'industries_id', 'id');
     }
     public function teacher()
     {

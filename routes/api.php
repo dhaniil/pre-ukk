@@ -1,8 +1,18 @@
 <?php
 
+use App\Http\Controllers\Api\IndustriesController;
+use App\Http\Controllers\Api\InternshipController;
+use App\Http\Controllers\Api\StudentController;
+use App\Http\Controllers\Api\TeacherController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+*/
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -16,4 +26,6 @@ Route::prefix('auth')->group(function () {
 
 Route::apiResource('users', App\Http\Controllers\Api\UserController::class);
 
+Route::apiResource('students', StudentController::class);
 
+Route::apiResource('internships', InternshipController::class);
