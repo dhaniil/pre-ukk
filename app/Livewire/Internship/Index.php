@@ -106,10 +106,10 @@ class Index extends Component
         $industries = Industries::all();
         $internships = Internship::with('industries')
             ->where('student_id', $student->id)
-            ->latest()
-            ->get();
+            ->first();
 
         return view('livewire.internship.index', [
+            'student' => $student,
             'industries' => $industries,
             'internships' => $internships,
         ]);
