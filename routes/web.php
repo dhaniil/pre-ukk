@@ -21,9 +21,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
 });
 
-Route::get('gsap', App\Livewire\Gsap::class)->name('gsap');
+Route::get('internship', App\Livewire\Internship\Index::class)->name('internship');
 Route::get('student', App\Livewire\Student\Index::class)->name('student');
-Route::get('luxury-animations', App\Livewire\LuxuryAnimations::class)->name('luxury-animations');
+
 
 
 require __DIR__.'/auth.php';

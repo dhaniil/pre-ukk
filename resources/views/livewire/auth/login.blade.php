@@ -1,6 +1,6 @@
 <div class="min-h-screen bg-[url(http://127.0.0.1:8000/Tori%20GIF.gif)] bg-cover">
     <div class=" w-full lg:w-2xl flex justify-end h-full">
-        <form action="" wire:submit="submit" class="border backdrop-blur-xs flex-col bg-black/20 w-full p-6 h-screen items-center flex justify-center gap-6">
+        <form action="" wire:submit="login" class="border backdrop-blur-xs flex-col bg-black/20 w-full p-6 h-screen items-center flex justify-center gap-6">
             <div class="relative items-center">
                <h1 class="text-4xl font-bold">Login</h1>
                 <p></p>

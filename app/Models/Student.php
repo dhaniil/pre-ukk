@@ -21,4 +21,9 @@ class Student extends Model
     {
         return $this->belongsTo(Industries::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'email', 'email');
+    }
 }
