@@ -19,6 +19,8 @@ class Index extends Component
     public $selesai;
     public $internshipId;
 
+    protected $listeners = ['internship-created' => '$refresh'];
+
     protected $rules = [
         'industries_id' => 'required|exists:industries,id',
         'mulai' => 'required|date',

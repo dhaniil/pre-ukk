@@ -2,6 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
     <head>
         @include('partials.head')
+        @filamentStyles
     </head>
     <body class="min-h-screen bg-white dark:bg-zinc-800">
         <!-- Create a flex container for the entire layout -->
@@ -141,7 +142,7 @@
                 {{ $slot }}
             </div>
         </div>
-
+        @filamentScripts
         @fluxScripts
     </body>
 </html>
