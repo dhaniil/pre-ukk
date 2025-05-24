@@ -14,12 +14,18 @@ class Index extends Component
     use WithPagination;
 
     public $openModal = false;
+    public $showReportModal = false;
     public $industries_id;
     public $mulai;
     public $selesai;
     public $internshipId;
 
-    protected $listeners = ['internship-created' => '$refresh'];
+    protected $listeners = [
+        'internship-created' => '$refresh',
+        'openModal' => 'handleOpenModal',
+        'closeModal' => 'handleCloseModal',
+        'reportModalClosed' => '$refresh'
+    ];
 
     protected $rules = [
         'industries_id' => 'required|exists:industries,id',
@@ -100,6 +106,28 @@ class Index extends Component
     {
         $this->reset(['industries_id', 'mulai', 'selesai', 'internshipId', 'openModal']);
         $this->resetValidation();
+    }
+
+    public function testModal()
+    {
+        $this->dispatch('openReportModal');
+    }
+
+    public function openReportModal()
+    {
+        $this->dispatch('openReportModal');
+    }
+
+    public function handleOpenModal($data = null)
+    {
+        if ($data && isset($data['component']) && $data['component'] === 'report-internship') {
+            $this->dispatch('openReportModal');
+        }
+    }
+
+    public function handleCloseModal()
+    {
+        $this->showReportModal = false;
     }
 
     public function render()
