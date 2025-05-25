@@ -62,6 +62,6 @@ class StudentController extends Controller
         $student->delete();
         return response()->json([
             'message' => 'Student deleted successfully',
-        ], 204);
+        ], 200);
     }
 }

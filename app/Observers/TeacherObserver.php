@@ -4,6 +4,8 @@ namespace App\Observers;
 
 use App\Models\Teacher;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class TeacherObserver
 {
@@ -12,13 +14,15 @@ class TeacherObserver
      */
     public function created(Teacher $teacher): void
     {
-        User::create([
+        $user = User::create([
             'name' => $teacher->name,
             'email' => $teacher->email,
-            'password' => Hash::make($teacher->nip),
+            'password' => Hash::make('12345678'),
             'email_verified_at' => now(),
-            'role' => 'teacher',
         ]);
+        $user->assignRole('teacher');
+
+
     }
 
     /**

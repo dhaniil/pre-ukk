@@ -47,6 +47,6 @@ class InternshipController extends Controller
         $internship->delete();
         return response()->json([
             'message' => 'Internship berhasil dihapus',
-        ]);
+        ], 200);
     }
 }
