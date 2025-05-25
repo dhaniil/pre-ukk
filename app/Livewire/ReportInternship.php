@@ -15,11 +15,6 @@ class ReportInternship extends Component
     public $mulai;
     public $selesai;
 
-    protected $listeners = [
-        'openReportModal' => 'openModal',
-        'closeReportModal' => 'closeModal'
-    ];
-
     protected $rules = [
         'industriesId' => 'required|exists:industries,id',
         'mulai' => 'required|date',
@@ -36,17 +31,11 @@ class ReportInternship extends Component
         'selesai.after' => 'Tanggal selesai harus setelah tanggal mulai',
     ];
 
-    public function openModal()
-    {
-        $this->isOpen = true;
-        $this->resetValidation();
-    }
-
     public function closeModal()
     {
-        $this->isOpen = false;
         $this->reset(['industriesId', 'mulai', 'selesai']);
         $this->resetValidation();
+        $this->dispatch('closeReportModal');
     }
 
     public function save()
@@ -66,7 +55,7 @@ class ReportInternship extends Component
 
         session()->flash('message', 'Laporan PKL berhasil disimpan!');
         $this->closeModal();
-
+        $this->dispatch('internship-created');
     }
 
     public function render()

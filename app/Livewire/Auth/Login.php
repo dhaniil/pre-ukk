@@ -13,6 +13,7 @@ use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 
+#[Layout('components.layouts.auth')]
 class Login extends Component
 {
     #[Validate('required|string|email')]

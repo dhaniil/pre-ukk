@@ -1,62 +1,74 @@
-<div class="flex flex-col gap-6">
-    <x-auth-header :title="__('Create an account')" :description="__('Enter your details below to create your account')" />
+<div>
+    <h2 class="text-2xl font-semibold text-center mb-6 text-zinc-800 dark:text-white">
+        {{ __('Create an account') }}
+    </h2>
 
-    <!-- Session Status -->
-    <x-auth-session-status class="text-center" :status="session('status')" />
+    <form wire:submit="register" class="space-y-6">
+        <div>
+            <flux:label>{{ __('Name') }}</flux:label>
+            <flux:input
+                type="text"
+                wire:model="name"
+                placeholder="{{ __('Enter your full name') }}"
+                autofocus
+                autocomplete="name" />
+            @error('name')
+                <flux:error>{{ $message }}</flux:error>
+            @enderror
+        </div>
 
-    <form wire:submit="register" class="flex flex-col gap-6">
-        <!-- Name -->
-        <flux:input
-            wire:model="name"
-            :label="__('Name')"
-            type="text"
-            required
-            autofocus
-            autocomplete="name"
-            :placeholder="__('Full name')"
-        />
+        <div>
+            <flux:label>{{ __('Email') }}</flux:label>
+            <flux:input
+                type="email"
+                wire:model="email"
+                placeholder="{{ __('Enter your email') }}"
+                autocomplete="email" />
+            @error('email')
+                <flux:error>{{ $message }}</flux:error>
+            @enderror
+        </div>
 
-        <!-- Email Address -->
-        <flux:input
-            wire:model="email"
-            :label="__('Email address')"
-            type="email"
-            required
-            autocomplete="email"
-            placeholder="email@example.com"
-        />
+        <div>
+            <flux:label>{{ __('Password') }}</flux:label>
+            <flux:input
+                type="password"
+                wire:model="password"
+                placeholder="{{ __('Create a password') }}"
+                autocomplete="new-password">
+                <x-slot name="iconTrailing">
+                    <flux:button size="sm" variant="subtle" icon="eye" class="-mr-1" x-on:click="$el.previousElementSibling.type = $el.previousElementSibling.type === 'password' ? 'text' : 'password'" />
+                </x-slot>
+            </flux:input>
+            @error('password')
+                <flux:error>{{ $message }}</flux:error>
+            @enderror
+        </div>
 
-        <!-- Password -->
-        <flux:input
-            wire:model="password"
-            :label="__('Password')"
-            type="password"
-            required
-            autocomplete="new-password"
-            :placeholder="__('Password')"
-            viewable
-        />
+        <div>
+            <flux:label>{{ __('Confirm Password') }}</flux:label>
+            <flux:input
+                type="password"
+                wire:model="password_confirmation"
+                placeholder="{{ __('Confirm your password') }}"
+                autocomplete="new-password">
+                <x-slot name="iconTrailing">
+                    <flux:button size="sm" variant="subtle" icon="eye" class="-mr-1" x-on:click="$el.previousElementSibling.type = $el.previousElementSibling.type === 'password' ? 'text' : 'password'" />
+                </x-slot>
+            </flux:input>
+        </div>
 
-        <!-- Confirm Password -->
-        <flux:input
-            wire:model="password_confirmation"
-            :label="__('Confirm password')"
-            type="password"
-            required
-            autocomplete="new-password"
-            :placeholder="__('Confirm password')"
-            viewable
-        />
-
-        <div class="flex items-center justify-end">
-            <flux:button type="submit" variant="primary" class="w-full">
+        <div>
+            <flux:button type="submit" class="w-full justify-center">
                 {{ __('Create account') }}
             </flux:button>
         </div>
-    </form>
 
-    <div class="space-x-1 rtl:space-x-reverse text-center text-sm text-zinc-600 dark:text-zinc-400">
-        {{ __('Already have an account?') }}
-        <flux:link :href="route('login')" wire:navigate>{{ __('Log in') }}</flux:link>
-    </div>
+        <p class="text-center text-sm text-zinc-600 dark:text-zinc-400">
+            {{ __('Already have an account?') }}
+            <flux:link :href="route('login')" wire:navigate>
+                {{ __('Log in') }}
+            </flux:link>
+        </p>
+    </form>
 </div>

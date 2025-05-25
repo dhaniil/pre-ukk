@@ -21,10 +21,7 @@ class Index extends Component
     public $internshipId;
 
     protected $listeners = [
-        'internship-created' => '$refresh',
-        'openModal' => 'handleOpenModal',
-        'closeModal' => 'handleCloseModal',
-        'reportModalClosed' => '$refresh'
+        'internship-created' => '$refresh'
     ];
 
     protected $rules = [
@@ -108,24 +105,12 @@ class Index extends Component
         $this->resetValidation();
     }
 
-    public function testModal()
-    {
-        $this->dispatch('openReportModal');
-    }
-
     public function openReportModal()
     {
-        $this->dispatch('openReportModal');
+        $this->showReportModal = true;
     }
 
-    public function handleOpenModal($data = null)
-    {
-        if ($data && isset($data['component']) && $data['component'] === 'report-internship') {
-            $this->dispatch('openReportModal');
-        }
-    }
-
-    public function handleCloseModal()
+    public function closeReportModal()
     {
         $this->showReportModal = false;
     }
