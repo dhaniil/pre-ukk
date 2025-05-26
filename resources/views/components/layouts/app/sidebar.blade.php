@@ -11,11 +11,17 @@
         <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
         <flux:navlist variant="outline">
-            <flux:navlist.group :heading="__('Platform')" class="grid">
-                <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')"
-                    wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
-                <flux:navlist.item icon="book-open-text" :href="route('internship')"
-                    :current="request()->routeIs('internship')" wire:navigate>{{ __('Laporan PKL') }}</flux:navlist.item>
+            <flux:navlist.group :heading="__('Menu PKL')" class="grid">
+                @role('student')
+                <flux:navlist.item icon="book-open-text" :href="route('student.dashboard')"
+                    :current="request()->routeIs('student.dashboard')" wire:navigate>{{ __('Dashboard Siswa') }}
+                </flux:navlist.item>
+                @endrole
+                @role('teacher')
+                <flux:navlist.item icon="book-open-text" :href="route('teacher.dashboard')"
+                    :current="request()->routeIs('teacher.dashboard')" wire:navigate>{{ __('Dashboard Guru') }}
+                </flux:navlist.item>
+                @endrole
             </flux:navlist.group>
         </flux:navlist>
 

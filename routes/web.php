@@ -4,14 +4,37 @@ use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+// Route::get('/', function () {
+//     return view('welcome');
+// })->name('home');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+// Route::view('dashboard', 'dashboard')
+//     ->middleware(['auth', 'verified'])
+//     ->name('dashboard');
+Route::get('dashboard', function () {
+    $user = Auth::user();
+
+    if (!$user) {
+        return redirect()->route('login');
+    }
+
+    return match(true){
+        $user->hasRole('admin') => redirect('admin'),
+        $user->hasRole('teacher') => redirect()->route('teacher.dashboard'),
+        $user->hasRole('student') => redirect()->route('student.dashboard'),
+        default => abort(403, 'Anda tidak memiliki akses ke halaman ini.'),
+    };
+})->middleware(['auth'])->name('dashboard');
+
+Route::get('student', App\Livewire\Internship\Index::class)
+    ->name('student.dashboard')
+    ->middleware(['role:student']);
+
+Route::get('teacher', App\Livewire\Teacher\Dashboard::class)
+    ->name('teacher.dashboard')
+    ->middleware(['role:teacher']);
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
@@ -19,13 +42,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/profile', Profile::class)->name('settings.profile');
     Route::get('settings/password', Password::class)->name('settings.password');
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
-    Route::get('student', App\Livewire\Student\Index::class)->name('student');
 });
 
 Route::get('test', function () {
     return 'test';
 })->name('test');
 
-Route::get('internship', \App\Livewire\Internship\Index::class)->name('internship');
+
 
 require __DIR__.'/auth.php';
