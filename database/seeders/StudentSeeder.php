@@ -15,7 +15,7 @@ class StudentSeeder extends Seeder
     public function run(): void
     {
         $role = Role::firstOrCreate(['name' => 'student', 'guard_name' => 'web']);
-    
+
         $students = [
             [
                 'name' => 'Abu Bakar Tsabit Ghufron',
@@ -24,7 +24,7 @@ class StudentSeeder extends Seeder
                 'contact' => '081234567001',
                 'email' => '20388@student.stembayo.sch.id',
                 'nis' => '20388',
-                'status_pkl' => 'Aktif',
+                'status_pkl' => 'Tidak Aktif',
             ],
             [
                 'name' => 'Ade Rafif Daneswara',
@@ -33,7 +33,7 @@ class StudentSeeder extends Seeder
                 'contact' => '081234567002',
                 'email' => '20389@student.stembayo.sch.id',
                 'nis' => '20389',
-                'status_pkl' => 'Aktif',
+                'status_pkl' => 'Tidak Aktif',
             ],
             [
                 'name' => 'Ade Zaidan Altahf',
@@ -42,7 +42,7 @@ class StudentSeeder extends Seeder
                 'contact' => '081234567003',
                 'email' => '20390@student.stembayo.sch.id',
                 'nis' => '20390',
-                'status_pkl' => 'Aktif',
+                'status_pkl' => 'Tidak Aktif',
             ],
             [
                 'name' => 'Adhwa Khalila Ramadani',
@@ -51,7 +51,7 @@ class StudentSeeder extends Seeder
                 'contact' => '081234567004',
                 'email' => '20391@studen.stembayo.sch.id',
                 'nis' => '20391',
-                'status_pkl' => 'aktif',
+                'status_pkl' => 'Tidak Aktif',
             ],
             [
                 'name' => 'Adnan Faris',
@@ -60,7 +60,7 @@ class StudentSeeder extends Seeder
                 'contact' => '081234567005',
                 'email' => '20392@student.stembayo.sch.id',
                 'nis' => '20392',
-                'status_pkl' => 'Aktif',
+                'status_pkl' => 'Tidak Aktif',
             ],
             [
                 'name' => 'Ahmad Hanaffi Rahmadhani',
@@ -69,7 +69,7 @@ class StudentSeeder extends Seeder
                 'contact' => '081234567006',
                 'email' => '20393@student.stembayo.sch.id',
                 'nis' => '20393',
-                'status_pkl' => 'Aktif',
+                'status_pkl' => 'Tidak Aktif',
             ],
             [
                 'name' => 'Farcah Amalia Nugrahaini',
@@ -78,7 +78,7 @@ class StudentSeeder extends Seeder
                 'contact' => '081234567006',
                 'email' => '20408@student.stembayo.sch.id',
                 'nis' => '20408',
-                'status_pkl' => 'Aktif',
+                'status_pkl' => 'Tidak Aktif',
             ],
             [
                 'name' => 'Akbar Ad\'ha Kusumawardhana',
@@ -116,7 +116,7 @@ class StudentSeeder extends Seeder
                 'nis' => '20397',
                 'status_pkl' => 'Tidak Aktif',
             ],
-            
+
         ];
 
         foreach ($students as $studentData) {
