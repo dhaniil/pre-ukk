@@ -6,7 +6,7 @@
         </div>
         <div class="flex flex-col">
             <h2 class="text-xl md:text-2xl font-bold ">Daftar Industri</h2>
-            <description class="text-gray-600 font-light">Cocominto Yori mo anata</description>
+            <description class="text-gray-600 font-light">Cocominto, Yori mo anata</description>
         </div>
 
     </div>
