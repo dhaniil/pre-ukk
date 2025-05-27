@@ -13,7 +13,11 @@ use Illuminate\Support\Facades\Auth;
 // Route::view('dashboard', 'dashboard')
 //     ->middleware(['auth', 'verified'])
 //     ->name('dashboard');
-Route::get('dashboard', function () {
+Route::get('/', function () {
+    if(!Auth::check()){
+        return redirect('login');
+    }
+    
     $user = Auth::user();
 
     if (!$user) {
@@ -36,6 +40,9 @@ Route::get('teacher', App\Livewire\Teacher\Dashboard::class)
     ->name('teacher.dashboard')
     ->middleware(['role:teacher']);
 
+Route::get('industry', App\Livewire\Industry\Index::class)
+    ->name('industry.dashboard');
+
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
@@ -43,11 +50,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/password', Password::class)->name('settings.password');
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
 });
-
-Route::get('test', function () {
-    return 'test';
-})->name('test');
-
 
 
 require __DIR__.'/auth.php';

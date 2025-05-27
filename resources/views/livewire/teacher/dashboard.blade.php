@@ -1,12 +1,13 @@
 <div class="min-h-screen space-y-6">
-    <div class="flex flex-col gap-2">
-        <div class="flex gap-2 items-center">
-            <flux:icon.square-user-round class="text-cyan-700 dark:text-cyan-300 size-12"/>
-            <flux:separator vertical />
-            <h2 class="text-2xl lg:text-4xl font-bold text-cyan-700 dark:text-cyan-300">Dashboard Guru</h2>
+    <div class="flex gap-4 border border-blue-100 rounded-2xl p-4 items-center">
+        <div class="bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-xl p-2">
+            <flux:icon.meh class="size-8 text-white" />
         </div>
         <div>
-            <flux:subheading  class="mb-6">Selamat datang di dashboard guru, {{ auth()->user()->name }}!</flux:subheading>
+            <h2 class="font-bold text-xl md:text-2xl">Dashboard Guru</h2>
+            <p>Selamat datang {{ $teacher->gender == "P" ? "Nona" : "Tuan" }}, {{auth()->user()->name}}</p>
+        </div>
+        <div>
         </div>
     </div>
 
@@ -58,7 +59,7 @@
             <flux:icon.building-office-2 class="text-cyan-600 dark:text-cyan-400 size-8"/>
             <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100">Industri yang Dibimbing</h3>
         </div>
-        
+
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="space-y-4">
                 <div class="flex items-center gap-3">
@@ -68,7 +69,7 @@
                         <p class="font-semibold text-gray-800 dark:text-gray-100">{{ $industry->name }}</p>
                     </div>
                 </div>
-                
+
                 <div class="flex items-center gap-3">
                     <flux:icon.briefcase class="text-gray-500 size-5"/>
                     <div>
@@ -77,7 +78,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="space-y-4">
                 <div class="flex items-center gap-3">
                     <flux:icon.map-pin class="text-gray-500 size-5"/>
@@ -86,7 +87,7 @@
                         <p class="font-semibold text-gray-800 dark:text-gray-100">{{ $industry->address }}</p>
                     </div>
                 </div>
-                
+
                 <div class="flex items-center gap-3">
                     <flux:icon.phone class="text-gray-500 size-5"/>
                     <div>
@@ -108,7 +109,7 @@
             </div>
             <flux:badge variant="filled" color="cyan">{{ $student->count() }} dari {{ $allStudents->count() }} Siswa</flux:badge>
         </div>
-        
+
         <div class="flex flex-col md:flex-row gap-4 mb-6">
             <div class="flex-1">
                 <flux:input wire:model.live="search" placeholder="Cari nama siswa, NIS, atau email..." class="w-full">
@@ -124,7 +125,7 @@
                 </flux:select>
             </div>
         </div>
-        
+
         <div class="overflow-x-auto">
             <table class="w-full">
                 <thead>
@@ -180,7 +181,7 @@
                                 $now = now();
                                 $start = \Carbon\Carbon::parse($internship->mulai);
                                 $end = \Carbon\Carbon::parse($internship->selesai);
-                                
+
                                 if ($now < $start) {
                                     $status = 'Belum Mulai';
                                     $statusColor = 'gray';

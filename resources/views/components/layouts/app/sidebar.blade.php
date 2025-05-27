@@ -26,9 +26,9 @@
         <div class="p-4 space-y-2">
             <div class="mb-4">
                 <h4 class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-3">Menu Utama</h4>
-                
+
                 @role('student')
-                <a href="{{ route('student.dashboard') }}" wire:navigate 
+                <a href="{{ route('student.dashboard') }}" wire:navigate
                    class="group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('student.dashboard') ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white' }}">
                     <div class="w-5 h-5 flex items-center justify-center">
                         <flux:icon.squares-2x2 variant="mini" class="{{ request()->routeIs('student.dashboard') ? 'text-white' : 'text-slate-500 dark:text-slate-400 group-hover:text-cyan-500' }}" />
@@ -40,9 +40,9 @@
                 </a>
 
                 @endrole
-                
+
                 @role('teacher')
-                <a href="{{ route('teacher.dashboard') }}" wire:navigate 
+                <a href="{{ route('teacher.dashboard') }}" wire:navigate
                    class="group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('teacher.dashboard') ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-lg shadow-emerald-500/25' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white' }}">
                     <div class="w-5 h-5 flex items-center justify-center">
                         <flux:icon.academic-cap variant="mini" class="{{ request()->routeIs('teacher.dashboard') ? 'text-white' : 'text-slate-500 dark:text-slate-400 group-hover:text-emerald-500' }}" />
@@ -53,6 +53,16 @@
                     @endif
                 </a>
                 @endrole
+                <a href="{{ route('industry.dashboard') }}" wire:navigate
+                   class="group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('industry.dashboard') ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-lg shadow-emerald-500/25' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white' }}">
+                    <div class="w-5 h-5 flex items-center justify-center">
+                        <flux:icon.map-pin-house variant="mini" class="{{ request()->routeIs('industry.dashboard') ? 'text-white' : 'text-slate-500 dark:text-slate-400 group-hover:text-emerald-500' }}" />
+                    </div>
+                    <span class="font-medium">Daftar Industri</span>
+                    @if(request()->routeIs('industry.dashboard'))
+                        <div class="ml-auto w-2 h-2 rounded-full bg-white/30"></div>
+                    @endif
+                </a>
             </div>
 
             <!-- Quick Stats Card -->
@@ -84,7 +94,7 @@
         <div class="p-4 border-t border-slate-200/50 dark:border-slate-700/50">
             <div class="mb-4">
                 <h5 class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-3">Pengaturan</h5>
-                
+
                 <flux:dropdown x-data align="end" class="w-full">
                     <flux:button variant="subtle" class="group w-full justify-start gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-200" aria-label="Preferred color scheme">
                         <div class="w-5 h-5 flex items-center justify-center">
@@ -174,7 +184,7 @@
     <!-- Mobile Header -->
     <flux:header class="lg:hidden absolute top-0 left-0 w-full z-10 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-sm border-b border-slate-200/50 dark:border-slate-700/50">
         <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
-        
+
         <!-- Mobile Logo -->
         <div class="flex items-center gap-2">
             <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
@@ -241,6 +251,8 @@
 </div>
 
     @fluxScripts
+
+    @stack('scripts')
 
 </body>
 
