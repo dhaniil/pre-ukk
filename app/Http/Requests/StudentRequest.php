@@ -29,7 +29,7 @@ class StudentRequest extends FormRequest
                     'contact' => 'sometimes|string|max:255',
                     'email' => 'sometimes|email|max:255|unique:students,email,' . $this->student->id,
                     'nis' => 'sometimes|string|max:255|unique:students,nis,' . $this->student->id,
-                    'status_pkl' => 'sometimes|string|in:Aktif, Tidak Aktif',
+                    'status_pkl' => 'sometimes|string|in:Aktif,Tidak Aktif',
                 ];
             }
 
@@ -40,7 +40,7 @@ class StudentRequest extends FormRequest
                 'contact' => 'required|string|max:255',
                 'email' => 'required|email|max:255|unique:students,email',
                 'nis' => 'required|string|max:255|unique:students,nis',
-                'status_pkl' => 'required|string|in:Aktif, Tidak Aktif',
+                'status_pkl' => 'required|string|in:Aktif,Tidak Aktif',
             ];
         }
 }

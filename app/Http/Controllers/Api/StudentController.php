@@ -24,11 +24,16 @@ class StudentController extends Controller
      */
     public function store(StudentRequest $request)
     {
-        $student = Student::create($request->validated());
-        return response()->json([
-            'message' => 'Student created successfully',
-            'data' => new StudentResource($student),
-        ], 201);
+        try {
+            $student = Student::create($request->validated());
+            return response()->json([
+                'message' => 'Data Siswa baru berhasil ditambahkan',
+                'data' => new StudentResource($student),
+            ], 201);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => $th->getMessage()]);
+        }
+
     }
 
     /**
@@ -48,7 +53,7 @@ class StudentController extends Controller
         $student = Student::findOrFail($id);
         $student->update($request->all());
         return response()->json([
-            'message' => 'Student updated successfully',
+            'message' => 'Data Siswa berhasil diperbarui',
             'data' => new StudentResource($student),
         ]);
     }
@@ -61,7 +66,7 @@ class StudentController extends Controller
         $student = Student::findOrFail($id);
         $student->delete();
         return response()->json([
-            'message' => 'Student deleted successfully',
+            'message' => "Siswa $student->name berhasil dihapus",
         ], 200);
     }
 }

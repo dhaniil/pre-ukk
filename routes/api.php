@@ -14,9 +14,9 @@ use Illuminate\Http\Request;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+//Route::get('/user', function (Request $request) {
+//    return $request->user();
+//})->middleware('auth:sanctum');
 
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
@@ -27,5 +27,8 @@ Route::prefix('auth')->group(function () {
 Route::apiResource('users', App\Http\Controllers\Api\UserController::class);
 
 Route::apiResource('students', StudentController::class);
-
 Route::apiResource('internships', InternshipController::class);
+Route::apiResource('industries', App\Http\Controllers\Api\IndustryController::class);
+Route::apiResource('teachers', TeacherController::class);
+
+

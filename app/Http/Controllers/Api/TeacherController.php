@@ -16,8 +16,13 @@ class TeacherController extends Controller
      */
     public function index()
     {
+
+
+
         $teachers = Teacher::with('industries')->get();
         return TeacherResource::collection($teachers);
+
+
     }
 
     /**
