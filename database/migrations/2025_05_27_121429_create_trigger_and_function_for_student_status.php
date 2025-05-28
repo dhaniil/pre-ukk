@@ -12,7 +12,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Create trigger untuk mengubah status_pkl menjadi Aktif
         DB::unprepared('
             CREATE TRIGGER after_internship_created
             AFTER INSERT ON internships
@@ -24,7 +23,6 @@ return new class extends Migration
             END
         ');
 
-        // Create function untuk format gender
         DB::unprepared('
             CREATE FUNCTION format_gender(gender CHAR)
             RETURNS VARCHAR(20)

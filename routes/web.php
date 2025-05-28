@@ -14,10 +14,6 @@ use Illuminate\Support\Facades\Auth;
 //     ->middleware(['auth', 'verified'])
 //     ->name('dashboard');
 Route::get('/', function () {
-    if(!Auth::check()){
-        return redirect('login');
-    }
-    
     $user = Auth::user();
 
     if (!$user) {
