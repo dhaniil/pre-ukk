@@ -16,12 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Refresh AOS on Livewire updates (for Laravel Livewire compatibility)
 document.addEventListener('livewire:navigated', () => {
     AOS.refresh();
 });
 
-// Also refresh AOS on any Livewire updates
 document.addEventListener('livewire:load', () => {
     Livewire.hook('message.processed', (message, component) => {
         AOS.refresh();

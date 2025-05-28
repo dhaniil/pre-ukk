@@ -6,6 +6,7 @@ use App\Models\Industries;
 use App\Models\Internship;
 use App\Models\Student;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redis;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -21,7 +22,7 @@ class Index extends Component
     public $internshipId;
 
     protected $listeners = [
-        'internship-created' => '$refresh'
+        'closeReportModal' => "closeReportModal"
     ];
 
     protected $rules = [
@@ -113,6 +114,7 @@ class Index extends Component
     public function closeReportModal()
     {
         $this->showReportModal = false;
+        $this->render();
     }
 
     public function render()
@@ -120,7 +122,7 @@ class Index extends Component
         $student = Student::where('email', Auth::user()->email)->firstOrFail();
         $industries = Industries::all();
         $internships = Internship::with('industries')
-            ->where('student_id', $student->id)
+            ->where('student_id', $student->id)->latest()
             ->first();
 
         return view('livewire.internship.index', [

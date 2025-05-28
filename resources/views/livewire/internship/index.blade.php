@@ -1,5 +1,5 @@
 <div class="min-h-screen space-y-6">
-    <div data-aos="fade-down" data-aos-duration="1000" id="heading" class="border border-blue-100 rounded-2xl p-4">
+    <div  id="heading" class="border border-blue-100 rounded-2xl p-4">
         <div class="flex gap-4 items-center">
             <div class="bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-xl p-2 border border-blue-100 ">
                 <flux:icon.graduation-cap class="text-white size-8" />
@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    <div data-aos="fade-up" data-aos-duration="1000" id="student-info" class="flex flex-col gap-6 border border-blue-100 rounded-2xl p-4">
+    <div  id="student-info" class="flex flex-col gap-6 border border-blue-100 rounded-2xl p-4">
         <div class="flex gap-4 items-center">
             <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-2 border border-blue-100">
                 <flux:icon.user class="text-white size-8" />
@@ -194,15 +194,17 @@
             </div>
         </div>
     @else
-        <!-- No Internship State -->
         <div class="p-8 rounded-2xl text-center">
             <flux:icon.building-office class="size-16 text-gray-400 mx-auto mb-4"/>
-            <h3 class="text-xl font-semibold text-gray-600 mb-2">Belum Ada Data PKL</h3>
-            <p class="text-gray-500 mb-6">Anda belum terdaftar dalam program PKL. Silakan hubungi admin atau guru pembimbing untuk mendaftar.</p>
-            <flux:button variant="primary">
-                <flux:icon.plus class="size-4"/>
-                Daftar PKL
+            <h3 class="text-xl font-semibold text-gray-600 mb-2">Belum Ada Data Laporan PKL</h3>
+            <p class="text-gray-500 mb-6">Anda belum membuat laporan PKL anda</p>
+            <flux:button variant="primary" wire:click="openReportModal" icon="plus" class="bg-gradient-to-br from-cyan-500 to-cyan-600 ">
+                Lapor PKL
             </flux:button>
         </div>
+    @endif
+
+    @if($showReportModal)
+    <livewire:report-internship />
     @endif
 </div>
