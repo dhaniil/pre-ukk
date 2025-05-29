@@ -12,6 +12,9 @@ return new class extends Migration
      */
     public function up(): void
     {
+        DB::unprepared(
+            'DROP FUNCTION IF EXISTS format_gender'
+        );
         DB::unprepared('
             CREATE TRIGGER after_internship_created
             AFTER INSERT ON internships

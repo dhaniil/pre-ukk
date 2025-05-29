@@ -9,100 +9,125 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <div wire:loading.flex class="flex-col gap-4 w-full col-span-1 md:col-span-2 lg:col-span-3">
-            @for ($i = 0; $i < 6; $i++)
-            <div class="p-4 border border-blue-100 drop-shadow-xl space-y-6 rounded-2xl bg-gradient-to-tl from-cyan-600/50 to-cyan-700/50 animate-pulse">
-                <div class="flex justify-between items-center">
-                    <div class="bg-white/20 backdrop-blur-lg p-2 rounded-md">
-                        <div class="size-6 bg-white/40 rounded"></div>
+    <div class="w-full flex gap-4">
+        <input
+            wire:model.live.100ms="search"
+            type="text"
+            class="w-3/4 p-2 rounded-lg border border-blue-100 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+            placeholder="Cari nama, bidang usaha..."
+        >
+
+        <flux:select
+            wire:model.live.100ms="bidang_usaha"
+            placeholder="Pilih bidang"
+            class="w-1/4 p-2 rounded-lg border border-blue-100 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 shadow">
+
+            <flux:select.option value="">Semua Bidang</flux:select.option>
+            @foreach($optionBidangUsaha as $option)
+                <option value="{{ html_entity_decode($option) }}">{{ $option }}</option>
+
+
+            @endforeach
+        </flux:select>'
+
+
+
+    </div>
+
+    <div class="grid grid-cols-1">
+        <div wire:loading.flex class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            @for ($i = 0; $i < 3; $i++)
+                <div class="p-4 border border-blue-100 drop-shadow-xl space-y-6 rounded-2xl bg-gradient-to-tl from-cyan-600/50 to-cyan-700/50 animate-pulse">
+                    <div class="flex justify-between items-center">
+                        <div class="bg-white/20 backdrop-blur-lg p-2 rounded-md">
+                            <div class="size-6 bg-white/40 rounded"></div>
+                        </div>
+                        <div class="h-6 bg-white/40 rounded w-32"></div>
                     </div>
-                    <div class="h-6 bg-white/40 rounded w-32"></div>
+                    <div class="flex flex-col gap-4 rounded-md bg-white/20 backdrop-blur-2xl p-4">
+                        <div class="flex gap-2 items-center">
+                            <div class="size-4 bg-white/40 rounded"></div>
+                            <div class="h-4 bg-white/40 rounded w-24"></div>
+                        </div>
+
+                        <div class="h-px bg-white/40"></div>
+
+                        <div class="flex gap-2 items-center">
+                            <div class="size-4 bg-white/40 rounded"></div>
+                            <div class="h-4 bg-white/40 rounded w-36"></div>
+                        </div>
+
+                        <div class="h-px bg-white/40"></div>
+
+                        <div class="grid items-center px-auto grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="h-4 bg-white/40 rounded"></div>
+                            <div class="h-4 bg-white/40 rounded"></div>
+                        </div>
+
+                        <div class="h-px bg-white/40"></div>
+
+                        <div class="flex gap-2 items-center">
+                            <div class="size-4 bg-white/40 rounded"></div>
+                            <div class="h-4 bg-white/40 rounded w-full"></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="flex flex-col gap-4 rounded-md bg-white/20 backdrop-blur-2xl p-4">
-                    <div class="flex gap-2 items-center">
-                        <div class="size-4 bg-white/40 rounded"></div>
-                        <div class="h-4 bg-white/40 rounded w-24"></div>
-                    </div>
-                    
-                    <div class="h-px bg-white/40"></div>
-                    
-                    <div class="flex gap-2 items-center">
-                        <div class="size-4 bg-white/40 rounded"></div>
-                        <div class="h-4 bg-white/40 rounded w-36"></div>
-                    </div>
-                    
-                    <div class="h-px bg-white/40"></div>
-                    
-                    <div class="grid items-center px-auto grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="h-4 bg-white/40 rounded"></div>
-                        <div class="h-4 bg-white/40 rounded"></div>
-                    </div>
-                    
-                    <div class="h-px bg-white/40"></div>
-                    
-                    <div class="flex gap-2 items-center">
-                        <div class="size-4 bg-white/40 rounded"></div>
-                        <div class="h-4 bg-white/40 rounded w-full"></div>
-                    </div>
-                </div>
-            </div>
             @endfor
         </div>
 
         <div wire:loading.remove class="col-span-1 md:col-span-2 lg:col-span-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             @foreach ($industries as $industry)
-            <div class="p-4 border border-blue-100 drop-shadow-xl space-y-6 rounded-2xl bg-gradient-to-tl from-cyan-600 to-cyan-700 drop-shadow-cyan-500">
-                <div class="flex justify-between items-center">
-                    <div class="bg-white/20 backdrop-blur-lg p-2 rounded-md">
-                        <flux:icon.cpu class="size-6 text-white" />
-                    </div>
-                    <h2 class="text-white font-bold text-lg md:text-xl">{{$industry->name}}</h2>
-                </div>
-                <div class="flex flex-col gap-4 rounded-md bg-white/20 backdrop-blur-2xl text-white p-4">
-                    <div class="flex gap-2 text-white items-center">
-                        <flux:icon.user class="size-4 text-white" />
-                        <span class="line-clamp-1">{{$industry->teacher->name}}</span>
-                    </div>
-
-                    <flux:separator />
-
-                    <div class="flex flex-row gap-2 items-center">
-                        <flux:icon.cable class="size-4 text-white" />
-                        <span class="line-clamp-1 cursor-pointer" title="{{$industry->bidang_usaha}}">{{Str::limit($industry->bidang_usaha, 50)}}</span>
-                    </div>
-
-                    <flux:separator />
-
-                    <div class="grid items-center px-auto grid-cols-1 md:grid-cols-2">
-                        <div class="text-center">
-                            <span class="text-center line-clapm-1 flex gap-2"><flux:icon.mail />{{$industry->email}}</span>
+                <div class="p-4 border border-blue-100 drop-shadow-xl space-y-6 rounded-2xl bg-gradient-to-tl from-cyan-600 to-cyan-700 drop-shadow-cyan-500">
+                    <div class="flex justify-between items-center">
+                        <div class="bg-white/20 backdrop-blur-lg p-2 rounded-md">
+                            <flux:icon.cpu class="size-6 text-white" />
                         </div>
-                        <div class="text-center">
-                            <div class="text-center flex gap-2 items-center justify-between">
-                                <div class="flex gap-2">
-                                    <flux:icon.phone />
-                                    <span>{{$industry->contact}}</span>
-                                </div>
-                                <div>
-                                    <button onclick="navigator.clipboard.writeText('{{$industry->contact}}')"
-                                            class="p-1 hover:bg-white/20 rounded transition-colors"
-                                            title="Copy contact">
-                                        <flux:icon.clipboard />
-                                    </button>
+                        <h2 class="text-white font-bold text-lg md:text-xl">{{ $industry->name }}</h2>
+                    </div>
+                    <div class="flex flex-col gap-4 rounded-md bg-white/20 backdrop-blur-2xl text-white p-4">
+                        <div class="flex gap-2 text-white items-center">
+                            <flux:icon.user class="size-4 text-white" />
+                            <span class="line-clamp-1">{{ $industry->teacher->name }}</span>
+                        </div>
+
+                        <flux:separator />
+
+                        <div class="flex flex-row gap-2 items-center">
+                            <flux:icon.cable class="size-4 text-white" />
+                            <span class="line-clamp-1 cursor-pointer" title="{{ $industry->bidang_usaha }}">{{ Str::limit($industry->bidang_usaha, 50) }}</span>
+                        </div>
+
+                        <flux:separator />
+
+                        <div class="grid items-center px-auto grid-cols-1 md:grid-cols-2">
+                            <div class="text-center">
+                                <span class="text-center line-clapm-1 flex gap-2"><flux:icon.mail />{{ $industry->email }}</span>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-center flex gap-2 items-center justify-between">
+                                    <div class="flex gap-2">
+                                        <flux:icon.phone />
+                                        <span>{{ $industry->contact }}</span>
+                                    </div>
+                                    <div>
+                                        <button onclick="navigator.clipboard.writeText('{{ $industry->contact }}')"
+                                                class="p-1 hover:bg-white/20 rounded transition-colors"
+                                                title="Copy contact">
+                                            <flux:icon.clipboard />
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <flux:separator />
+                        <flux:separator />
 
-                    <div class="flex gap-2 text-white items-center">
-                        <flux:icon.map class="size-4 text-white" />
-                        <span class="line-clamp-1" title="{{$industry->address}}">{{$industry->address}}</span>
+                        <div class="flex gap-2 text-white items-center">
+                            <flux:icon.map class="size-4 text-white" />
+                            <span class="line-clamp-1" title="{{ $industry->address }}">{{ $industry->address }}</span>
+                        </div>
                     </div>
                 </div>
-            </div>
             @endforeach
         </div>
     </div>

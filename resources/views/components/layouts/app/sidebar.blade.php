@@ -3,6 +3,7 @@
 
 <head>
     @include('partials.head')
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
 </head>
 
 <body class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-zinc-900 dark:to-slate-900">
@@ -187,7 +188,7 @@
 
         <!-- Mobile Logo -->
         <div class="flex items-center gap-2">
-            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg">
                 <flux:icon.academic-cap variant="mini" class="text-white" />
             </div>
             <span class="font-bold text-slate-900 dark:text-white">PKL System</span>
