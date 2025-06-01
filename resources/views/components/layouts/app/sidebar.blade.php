@@ -96,30 +96,31 @@
             <div class="mb-4">
                 <h5 class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-3">Pengaturan</h5>
 
-                <flux:dropdown x-data align="end" class="w-full">
-                    <flux:button variant="subtle" class="group w-full justify-start gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-200" aria-label="Preferred color scheme">
+                <flux:dropdown align="start" class="w-full">
+                    <flux:button variant="subtle" class="group w-full justify-start gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-200">
                         <div class="w-5 h-5 flex items-center justify-center">
                             <flux:icon.sun x-show="$flux.appearance === 'light'" variant="mini" class="text-amber-500" />
                             <flux:icon.moon x-show="$flux.appearance === 'dark'" variant="mini" class="text-slate-400" />
-                            <flux:icon.moon x-show="$flux.appearance === 'system' && $flux.dark" variant="mini" class="text-slate-400" />
-                            <flux:icon.sun x-show="$flux.appearance === 'system' && ! $flux.dark" variant="mini" class="text-amber-500" />
+                            <flux:icon.computer-desktop x-show="$flux.appearance === 'system'" variant="mini" class="text-slate-500" />
                         </div>
                         <span class="font-medium">Tema</span>
                         <flux:icon.chevron-down variant="mini" class="ml-auto w-4 h-4 text-slate-400" />
                     </flux:button>
 
-                    <flux:menu class="w-full">
-                        <flux:menu.item icon="sun" x-on:click="$flux.appearance = 'light'" class="gap-3">
+                    <flux:menu class="w-48">
+                        <flux:menu.item x-on:click="$flux.appearance = 'light'" class="gap-3">
                             <flux:icon.sun variant="mini" class="text-amber-500" />
-                            Terang
+                            <span class="text-sm">Terang</span>
                         </flux:menu.item>
-                        <flux:menu.item icon="moon" x-on:click="$flux.appearance = 'dark'" class="gap-3">
+                        
+                        <flux:menu.item x-on:click="$flux.appearance = 'dark'" class="gap-3">
                             <flux:icon.moon variant="mini" class="text-slate-400" />
-                            Gelap
+                            <span class="text-sm">Gelap</span>
                         </flux:menu.item>
-                        <flux:menu.item icon="computer-desktop" x-on:click="$flux.appearance = 'system'" class="gap-3">
+                        
+                        <flux:menu.item x-on:click="$flux.appearance = 'system'" class="gap-3">
                             <flux:icon.computer-desktop variant="mini" class="text-slate-500" />
-                            Sistem
+                            <span class="text-sm">Sistem</span>
                         </flux:menu.item>
                     </flux:menu>
                 </flux:dropdown>
@@ -144,17 +145,17 @@
                     </div>
                 </flux:button>
 
-                <flux:menu class="w-full">
+                <flux:menu class="w-64 max-w-none">
                     <flux:menu.radio.group>
                         <div class="p-0 text-sm font-normal">
                             <div class="flex items-center gap-3 px-4 py-3 text-start text-sm border-b border-slate-100 dark:border-slate-700">
-                                <div class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-xl">
-                                    <div class="flex h-full w-full items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white font-semibold text-sm">
+                                <div class="relative flex h-8 w-8 shrink-0 overflow-hidden rounded-lg">
+                                    <div class="flex h-full w-full items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 text-white font-semibold text-xs">
                                         {{ auth()->user()->initials() }}
                                     </div>
                                 </div>
                                 <div class="flex-1 min-w-0">
-                                    <div class="font-semibold text-slate-900 dark:text-white truncate">{{ auth()->user()->name }}</div>
+                                    <div class="font-medium text-slate-900 dark:text-white truncate text-sm">{{ auth()->user()->name }}</div>
                                     <div class="text-xs text-slate-500 dark:text-slate-400 truncate">{{ auth()->user()->email }}</div>
                                 </div>
                             </div>
@@ -162,9 +163,9 @@
                     </flux:menu.radio.group>
 
                     <flux:menu.radio.group>
-                        <flux:menu.item :href="route('settings.profile')" wire:navigate class="gap-3">
+                        <flux:menu.item :href="route('settings.profile')" wire:navigate class="gap-3 px-4 py-2">
                             <flux:icon.cog-6-tooth variant="mini" class="text-slate-500" />
-                            {{ __('Pengaturan') }}
+                            <span class="text-sm">{{ __('Pengaturan') }}</span>
                         </flux:menu.item>
                     </flux:menu.radio.group>
 
@@ -172,9 +173,9 @@
 
                     <form method="POST" action="{{ route('logout') }}" class="w-full">
                         @csrf
-                        <flux:menu.item as="button" type="submit" class="w-full gap-3 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20">
+                        <flux:menu.item as="button" type="submit" class="w-full gap-3 px-4 py-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20">
                             <flux:icon.arrow-right-start-on-rectangle variant="mini" class="text-red-500" />
-                            {{ __('Keluar') }}
+                            <span class="text-sm">{{ __('Keluar') }}</span>
                         </flux:menu.item>
                     </form>
                 </flux:menu>
@@ -206,17 +207,17 @@
                 </div>
             </flux:button>
 
-            <flux:menu class="w-64">
+            <flux:menu class="w-72 max-w-none">
                 <flux:menu.radio.group>
                     <div class="p-0 text-sm font-normal">
                         <div class="flex items-center gap-3 px-4 py-3 text-start text-sm border-b border-slate-100 dark:border-slate-700">
-                            <div class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-xl">
-                                <div class="flex h-full w-full items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white font-semibold text-sm">
+                            <div class="relative flex h-8 w-8 shrink-0 overflow-hidden rounded-lg">
+                                <div class="flex h-full w-full items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 text-white font-semibold text-xs">
                                     {{ auth()->user()->initials() }}
                                 </div>
                             </div>
                             <div class="flex-1 min-w-0">
-                                <div class="font-semibold text-slate-900 dark:text-white truncate">{{ auth()->user()->name }}</div>
+                                <div class="font-medium text-slate-900 dark:text-white truncate text-sm">{{ auth()->user()->name }}</div>
                                 <div class="text-xs text-slate-500 dark:text-slate-400 truncate">{{ auth()->user()->email }}</div>
                             </div>
                         </div>
@@ -224,9 +225,9 @@
                 </flux:menu.radio.group>
 
                 <flux:menu.radio.group>
-                    <flux:menu.item :href="route('settings.profile')" wire:navigate class="gap-3">
+                    <flux:menu.item :href="route('settings.profile')" wire:navigate class="gap-3 px-4 py-2">
                         <flux:icon.cog-6-tooth variant="mini" class="text-slate-500" />
-                        {{ __('Pengaturan') }}
+                        <span class="text-sm">{{ __('Pengaturan') }}</span>
                     </flux:menu.item>
                 </flux:menu.radio.group>
 
@@ -234,9 +235,9 @@
 
                 <form method="POST" action="{{ route('logout') }}" class="w-full">
                     @csrf
-                    <flux:menu.item as="button" type="submit" class="w-full gap-3 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20">
+                    <flux:menu.item as="button" type="submit" class="w-full gap-3 px-4 py-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20">
                         <flux:icon.arrow-right-start-on-rectangle variant="mini" class="text-red-500" />
-                        {{ __('Keluar') }}
+                        <span class="text-sm">{{ __('Keluar') }}</span>
                     </flux:menu.item>
                 </form>
             </flux:menu>

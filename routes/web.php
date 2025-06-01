@@ -30,14 +30,14 @@ Route::get('/', function () {
 
 Route::get('student', App\Livewire\Internship\Index::class)
     ->name('student.dashboard')
-    ->middleware(['role:student']);
+    ->middleware(['role:student', 'auth']);
 
 Route::get('teacher', App\Livewire\Teacher\Dashboard::class)
     ->name('teacher.dashboard')
-    ->middleware(['role:teacher']);
+    ->middleware(['role:teacher', 'auth']);
 
 Route::get('industry', App\Livewire\Industry\Index::class)
-    ->name('industry.dashboard');
+    ->name('industry.dashboard')->middleware('auth');
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');

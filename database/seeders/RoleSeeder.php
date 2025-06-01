@@ -32,6 +32,7 @@ class RoleSeeder extends Seeder
         $superAdminRole = Role::create(['name' => 'super_admin', 'guard_name' => 'web']);
         Role::create(['name' => 'teacher', 'guard_name' => 'web']);
         Role::create(['name' => 'student', 'guard_name' => 'web']);
+        Role::create(['name' => 'student', 'guard_name' => 'web']);
 
         $superAdminRole->givePermissionTo(\Spatie\Permission\Models\Permission::all());
         $user->assignRole($superAdminRole);

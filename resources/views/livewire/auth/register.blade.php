@@ -10,26 +10,6 @@
     </div>
 
     <form wire:submit="register" class="space-y-4">
-        <!-- Name Field -->
-        <div>
-            <flux:label class="text-gray-700 dark:text-gray-300 text-sm">{{ __('Nama Lengkap') }}</flux:label>
-            <div class="mt-1">
-                <flux:input
-                    type="text"
-                    wire:model="name"
-                    placeholder="{{ __('Masukkan nama lengkap') }}"
-                    autofocus
-                    autocomplete="name"
-                    class="w-full  focus:border-blue-500 focus:ring-1 focus:ring-blue-500" />
-            </div>
-            @error('name')
-                <div class="text-red-600 text-xs mt-1">
-                    {{ $message }}
-                </div>
-            @enderror
-        </div>
-
-        <!-- Email Field -->
         <div>
             <flux:label class="text-gray-700 dark:text-gray-300 text-sm">{{ __('Email') }}</flux:label>
             <div class="mt-1">

@@ -1,18 +1,18 @@
 <div class="min-h-screen space-y-6">
-    <div class="flex gap-4 border border-blue-100 rounded-2xl p-4 items-center">
-        <div class="bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-xl p-2">
+    <div class="flex gap-4 border border-blue-100 dark:border-zinc-700/60 rounded-2xl p-4 items-center bg-white dark:bg-zinc-900">
+        <div class="bg-gradient-to-br from-cyan-500 to-cyan-600 dark:from-cyan-700 dark:to-cyan-800 rounded-xl p-2">
             <flux:icon.meh class="size-8 text-white" />
         </div>
         <div>
-            <h2 class="font-bold text-xl md:text-2xl">Dashboard Guru</h2>
-            <p>Selamat datang {{ $teacher->gender == "P" ? "Nona" : "Tuan" }}, {{auth()->user()->name}}</p>
+            <h2 class="font-bold text-xl md:text-2xl text-gray-900 dark:text-white">Dashboard Guru</h2>
+            <p class="text-gray-600 dark:text-gray-400">Selamat datang {{ $teacher->gender == "P" ? "Nona" : "Tuan" }}, {{auth()->user()->name}}</p>
         </div>
         <div>
         </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 p-6 rounded-xl border border-blue-200 dark:border-blue-700 shadow-sm hover:shadow-md transition-shadow">
+        <div class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 p-6 rounded-xl border border-blue-200 dark:border-zinc-800/60 shadow-sm hover:shadow-md transition-shadow">
             <div class="flex items-center justify-between">
                 <div>
                     <flux:icon.users class="text-blue-600 dark:text-blue-400 size-8 mb-3"/>
@@ -21,8 +21,7 @@
                 </div>
             </div>
         </div>
-
-        <div class="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 p-6 rounded-xl border border-green-200 dark:border-green-700 shadow-sm hover:shadow-md transition-shadow">
+        <div class="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 p-6 rounded-xl border border-green-200 dark:border-zinc-800/60 shadow-sm hover:shadow-md transition-shadow">
             <div class="flex items-center justify-between">
                 <div>
                     <flux:icon.briefcase class="text-green-600 dark:text-green-400 size-8 mb-3"/>
@@ -31,8 +30,7 @@
                 </div>
             </div>
         </div>
-
-        <div class="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 p-6 rounded-xl border border-purple-200 dark:border-purple-700 shadow-sm hover:shadow-md transition-shadow">
+        <div class="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 p-6 rounded-xl border border-purple-200 dark:border-zinc-800/60 shadow-sm hover:shadow-md transition-shadow">
             <div class="flex items-center justify-between">
                 <div>
                     <flux:icon.check-circle class="text-purple-600 dark:text-purple-400 size-8 mb-3"/>
@@ -41,8 +39,7 @@
                 </div>
             </div>
         </div>
-
-        <div class="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 p-6 rounded-xl border border-orange-200 dark:border-orange-700 shadow-sm hover:shadow-md transition-shadow">
+        <div class="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 p-6 rounded-xl border border-orange-200 dark:border-zinc-800/60 shadow-sm hover:shadow-md transition-shadow">
             <div class="flex items-center justify-between">
                 <div>
                     <flux:icon.building-office class="text-orange-600 dark:text-orange-400 size-8 mb-3"/>
@@ -54,7 +51,7 @@
     </div>
 
     @if($industry)
-    <div class="bg-white dark:bg-zinc-900 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-zinc-700">
+    <div class="bg-white dark:bg-zinc-900 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-zinc-700/60">
         <div class="flex items-center gap-3 mb-6">
             <flux:icon.building-office-2 class="text-cyan-600 dark:text-cyan-400 size-8"/>
             <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100">Industri yang Dibimbing</h3>
@@ -101,7 +98,7 @@
     @endif
 
     @if($allStudents->count() > 0)
-    <div class="bg-white dark:bg-zinc-900 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-zinc-700">
+    <div class="bg-white dark:bg-zinc-900 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-zinc-700/60">
         <div class="flex items-center justify-between mb-6">
             <div class="flex items-center gap-3">
                 <flux:icon.academic-cap class="text-cyan-600 dark:text-cyan-400 size-8"/>
@@ -227,7 +224,7 @@
         </div>
     </div>
     @else
-    <div class="bg-white dark:bg-zinc-900 p-8 rounded-xl shadow-sm border border-gray-200 dark:border-zinc-700 text-center">
+    <div class="bg-white dark:bg-zinc-900 p-8 rounded-xl shadow-sm border border-gray-200 dark:border-zinc-700/60 text-center">
         <flux:icon.user-group class="size-16 text-gray-400 mx-auto mb-4"/>
         <h3 class="text-xl font-semibold text-gray-600 dark:text-gray-400 mb-2">Belum Ada Siswa PKL</h3>
         <p class="text-gray-500 dark:text-gray-500">Saat ini belum ada siswa yang mengambil PKL di industri yang Anda bimbing.</p>

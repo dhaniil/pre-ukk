@@ -3,6 +3,7 @@
 namespace App\Livewire\Auth;
 
 use App\Models\User;
+use App\Models\Student;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -13,8 +14,6 @@ use Livewire\Component;
 #[Layout('components.layouts.auth')]
 class Register extends Component
 {
-    public string $name = '';
-
     public string $email = '';
 
     public string $password = '';
@@ -27,15 +26,32 @@ class Register extends Component
     public function register(): void
     {
         $validated = $this->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', function ($attribute, $value, $fail) {
+                $studentExists = Student::where('email', $value)->exists();
+                
+                if (!$studentExists) {
+                    $fail('Email ini tidak terdaftar sebagai siswa. Hubungi administrator untuk mendaftarkan email Anda terlebih dahulu.');
+                    return;
+                }
+
+                $userExists = User::where('email', $value)->exists();
+                if ($userExists) {
+                    $fail('Email ini sudah terdaftar sebagai user. Silakan login atau reset password jika lupa.');
+                    return;
+                }
+            }],
             'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $validated['password'] = Hash::make($validated['password']);
+        $student = Student::where('email', $validated['email'])->first();
+        $user = User::create([
+            'name' => $student->name,
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password'])
+        ]);
 
-        event(new Registered(($user = User::create($validated))));
-
+        $user->assignRole('student');
+        event(new Registered($user));
         Auth::login($user);
 
         $this->redirect(route('dashboard', absolute: false), navigate: true);

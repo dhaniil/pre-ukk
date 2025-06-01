@@ -12,10 +12,7 @@ class UserObserver
      */
     public function created(User $user): void
     {
-        Student::create([
-            'name' => $user->name,
 
-        ]);
     }
 
     /**
