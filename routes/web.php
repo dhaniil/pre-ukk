@@ -21,7 +21,7 @@ Route::get('/', function () {
     }
 
     return match(true){
-        $user->hasRole('admin') => redirect('admin'),
+        $user->hasRole('super_admin') => redirect('/admin'),
         $user->hasRole('teacher') => redirect()->route('teacher.dashboard'),
         $user->hasRole('student') => redirect()->route('student.dashboard'),
         default => abort(403, 'Anda tidak memiliki akses ke halaman ini.'),
