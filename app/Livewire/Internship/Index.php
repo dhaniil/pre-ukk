@@ -6,7 +6,7 @@ use App\Models\Industries;
 use App\Models\Internship;
 use App\Models\Student;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -51,23 +51,32 @@ class Index extends Component
     {
         $this->validate();
 
-        $student = Student::where('email', Auth::user()->email)->firstOrFail();
-        $industries = Industries::find($this->industries_id);
-        if (!$industries) {
-            session()->flash('error', 'Industri tidak ditemukan.');
-            return;
+        try {
+            DB::beginTransaction();
+
+            $student = Student::where('email', Auth::user()->email)->firstOrFail();
+            $industries = Industries::find($this->industries_id);
+            if (!$industries) {
+                DB::rollBack();
+                session()->flash('error', 'Industri tidak ditemukan.');
+                return;
+            }
+
+            Internship::create([
+                'student_id' => $student->id,
+                'teacher_id' => $industries->guru_pembimbing,
+                'industries_id' => $this->industries_id,
+                'mulai' => $this->mulai,
+                'selesai' => $this->selesai,
+            ]);
+
+            DB::commit();
+            $this->resetForm();
+            session()->flash('message', 'Data PKL berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            session()->flash('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
-
-        Internship::create([
-            'student_id' => $student->id,
-            'teacher_id' => $industries->guru_pembimbing,
-            'industries_id' => $this->industries_id,
-            'mulai' => $this->mulai,
-            'selesai' => $this->selesai,
-        ]);
-
-        $this->resetForm();
-        session()->flash('message', 'Data PKL berhasil ditambahkan.');
     }
 
     public function edit(Internship $internship)
@@ -83,15 +92,29 @@ class Index extends Component
     {
         $this->validate();
 
-        $internship = Internship::find($this->internshipId);
-        $internship->update([
-            'industries_id' => $this->industries_id,
-            'mulai' => $this->mulai,
-            'selesai' => $this->selesai,
-        ]);
+        try {
+            DB::beginTransaction();
 
-        $this->resetForm();
-        session()->flash('message', 'Data PKL berhasil diperbarui.');
+            $internship = Internship::find($this->internshipId);
+            if (!$internship) {
+                DB::rollBack();
+                session()->flash('error', 'Data PKL tidak ditemukan.');
+                return;
+            }
+
+            $internship->update([
+                'industries_id' => $this->industries_id,
+                'mulai' => $this->mulai,
+                'selesai' => $this->selesai,
+            ]);
+
+            DB::commit();
+            $this->resetForm();
+            session()->flash('message', 'Data PKL berhasil diperbarui.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            session()->flash('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
 
     public function delete(Internship $internship)
