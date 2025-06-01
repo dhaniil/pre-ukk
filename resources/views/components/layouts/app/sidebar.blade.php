@@ -17,8 +17,8 @@
                     <flux:icon.academic-cap variant="mini" class="text-white" />
                 </div>
                 <div>
-                    <h3 class="font-bold text-slate-900 dark:text-white">SIM Stembayo</h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400">Harus e design sim stembayo gini</p>
+                    <h3 class="font-bold text-slate-900 dark:text-white">PKL Stembayo</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Sistem Manajemen PKL</p>
                 </div>
             </div>
         </div>
@@ -112,12 +112,12 @@
                             <flux:icon.sun variant="mini" class="text-amber-500" />
                             <span class="text-sm">Terang</span>
                         </flux:menu.item>
-                        
+
                         <flux:menu.item x-on:click="$flux.appearance = 'dark'" class="gap-3">
                             <flux:icon.moon variant="mini" class="text-slate-400" />
                             <span class="text-sm">Gelap</span>
                         </flux:menu.item>
-                        
+
                         <flux:menu.item x-on:click="$flux.appearance = 'system'" class="gap-3">
                             <flux:icon.computer-desktop variant="mini" class="text-slate-500" />
                             <span class="text-sm">Sistem</span>

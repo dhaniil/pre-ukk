@@ -75,7 +75,7 @@
 
         <!-- Register Button -->
         <div class="mt-4">
-            <flux:button icon="send" type="submit" class="w-full justify-center bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded">
+            <flux:button variant="primary" icon="send" type="submit" class="w-full justify-center bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded">
                 {{ __('Daftar') }}
             </flux:button>
         </div>

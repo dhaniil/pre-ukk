@@ -8,7 +8,7 @@
             gap: 0.5rem;
             margin: 0;
         }
-        
+
         .pagination .page-link {
             padding: 0.75rem 1rem;
             border: 1px solid #dbeafe;
@@ -19,28 +19,28 @@
             transition: all 0.2s;
             font-weight: 500;
         }
-        
+
         .pagination .page-link:hover {
             background: #f0f9ff;
             border-color: #06b6d4;
             color: #0891b2;
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
         }
-        
+
         .pagination .page-item.active .page-link {
             background: linear-gradient(135deg, #06b6d4, #0891b2);
             border-color: #06b6d4;
             color: white;
             box-shadow: 0 4px 6px -1px rgb(6 182 212 / 0.3);
         }
-        
+
         .pagination .page-item.disabled .page-link {
             background: #f9fafb;
             border-color: #e5e7eb;
             color: #9ca3af;
             cursor: not-allowed;
         }
-        
+
         .pagination .page-item.disabled .page-link:hover {
             background: #f9fafb;
             border-color: #e5e7eb;
@@ -55,7 +55,7 @@
         </div>
         <div class="flex flex-col">
             <h2 class="text-xl md:text-2xl font-bold ">Daftar Industri</h2>
-            <description class="text-gray-600 font-light">Cocominto, Yori mo anata</description>
+            <p class="text-gray-600 font-light">Pantau daftar industri yang tersedia</p>
         </div>
     </div>
 
@@ -114,7 +114,7 @@
 
             <!-- Reset Button -->
             @if($search || $bidang_usaha)
-                <button 
+                <button
                     wire:click="resetFilter"
                     class="px-4 py-3 bg-white border border-blue-100 text-gray-700 rounded-lg shadow-sm hover:shadow-md hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 flex items-center gap-2 font-medium"
                     title="Reset Filter">
@@ -170,7 +170,7 @@
                         </div>
                         <div class="h-8 bg-gray-200 rounded w-24"></div>
                     </div>
-                    
+
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div class="space-y-2">
                             <div class="h-4 bg-gray-200 rounded w-full"></div>
@@ -212,7 +212,7 @@
                             </span>
                         </div>
                     </div>
-                    
+
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <!-- Bidang Usaha -->
                         <div class="space-y-2">
@@ -224,7 +224,7 @@
                                 {{ $industry->bidang_usaha }}
                             </p>
                         </div>
-                        
+
                         <!-- Contact Info -->
                         <div class="space-y-2">
                             <div class="flex items-center gap-2 text-gray-700">
@@ -243,7 +243,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Address -->
                         <div class="space-y-2">
                             <div class="flex items-center gap-2 text-gray-700">
@@ -270,7 +270,7 @@
                 </div>
             @endforelse
         </div>
-        
+
         <!-- Pagination -->
         <div wire:loading.remove class="mt-8 flex justify-center">
             <div class="bg-white rounded-2xl border border-blue-100 shadow-sm p-4 w-full">
