@@ -79,6 +79,7 @@ class ReportInternship extends Component
     public function render()
     {
         $industries = Industries::all();
+        // 321
         return view('livewire.report-internship', [
             'industries' => $industries,
         ]);
