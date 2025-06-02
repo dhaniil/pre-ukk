@@ -29,6 +29,7 @@ class Index extends Component
         'industries_id' => 'required|exists:industries,id',
         'mulai' => 'required|date',
         'selesai' => 'required|date|after:mulai',
+        
     ];
 
     protected $messages = [
@@ -39,6 +40,7 @@ class Index extends Component
         'selesai.required' => 'Tanggal selesai harus diisi',
         'selesai.date' => 'Format tanggal selesai tidak valid',
         'selesai.after' => 'Tanggal selesai harus setelah tanggal mulai',
+        'selesai.after_or_equal' => 'Durasi PKL minimal 90 hari',
     ];
 
     public function create()
@@ -50,10 +52,19 @@ class Index extends Component
     public function store()
     {
         $this->validate();
-
+        
         try {
             DB::beginTransaction();
+            $duration = \Carbon\Carbon::parse($this->mulai)->diffInDays(\Carbon\Carbon::parse($this->selesai));
+            
+            if ($duration < 90) {
+                $this->addError('selesai', 'Durasi PKL minimal 90 hari.');
+                session()->flash('error', 'Durasi PKL minimal 90 hari.');
+                DB::rollback();
+                return;
+            }
 
+            
             $student = Student::where('email', Auth::user()->email)->firstOrFail();
             $industries = Industries::find($this->industries_id);
             if (!$industries) {
@@ -94,6 +105,15 @@ class Index extends Component
 
         try {
             DB::beginTransaction();
+            
+    
+            $duration = \Carbon\Carbon::parse($this->mulai)->diffInDays(\Carbon\Carbon::parse($this->selesai));
+            if ($duration < 90) {
+                $this->addError('selesai', 'Durasi PKL minimal 90 hari.');
+                session()->flash('error', 'Durasi PKL minimal 90 hari.');
+                DB::rollBack();
+                return;
+            }
 
             $internship = Internship::find($this->internshipId);
             if (!$internship) {

@@ -13,7 +13,9 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
+use Filament\Notifications;
 use Filament\Resources\Resource;
+use Illuminate\Support\Collection;
 use Filament\Tables;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\RestoreBulkAction;
@@ -35,7 +37,6 @@ public static function infolist(Infolist $infolist): Infolist
 {
     return $infolist
         ->schema([
-            // Personal Information Section
             \Filament\Infolists\Components\Section::make('Student Details')
                 ->schema([
                     \Filament\Infolists\Components\Grid::make(2)
@@ -59,6 +60,18 @@ public static function infolist(Infolist $infolist): Infolist
                         ]),
                 ]),
 
+            \Filament\Infolists\Components\Section::make('Internship Information')
+                ->schema([
+                    \Filament\Infolists\Components\Grid::make(1)
+                        ->schema([
+                            TextEntry::make('internships_count')
+                                ->label('Active Internships')
+                                ->state(fn (Student $record): int => $record->internships()->count())
+                                ->badge()
+                                ->color('success'),
+                        ]),
+                ]),
+
             \Filament\Infolists\Components\Section::make('Contact Information')
                 ->schema([
                     \Filament\Infolists\Components\Grid::make(2)
@@ -75,8 +88,7 @@ public static function infolist(Infolist $infolist): Infolist
                                 ->url(fn (string $state): string => "mailto:{$state}"),
                         ]),
                 ]),
-                
-            // System Information Section (optional)
+
             \Filament\Infolists\Components\Section::make('System Information')
                 ->collapsed()
                 ->schema([
@@ -158,6 +170,9 @@ public static function infolist(Infolist $infolist): Infolist
                 ->searchable(),
                 TextColumn::make('nis')
                 ->searchable(),
+                TextColumn::make('email')
+                ->searchable()
+                ->copyable(),
                 TextColumn::make('gender')
                 ->label('Jenis Kelamin')
                 ->badge()
@@ -169,7 +184,11 @@ public static function infolist(Infolist $infolist): Infolist
                     }
                 }),
                 TextColumn::make('status_pkl'),
-
+                TextColumn::make('internships_count')
+                ->label('Internships')
+                ->counts('internships')
+                ->badge()
+                ->color('success')
             ])
             ->filters([
                 SelectFilter::make('status_pkl')
@@ -184,17 +203,59 @@ public static function infolist(Infolist $infolist): Infolist
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make()
+                        ->before(function (Tables\Actions\DeleteAction $action, Student $record) {
+                            if ($record->internships()->count() > 0) {
+                                $action->cancel();
+                                \Filament\Notifications\Notification::make()
+                                    ->danger()
+                                    ->title('Tidak bisa menghapus siswa')
+                                    ->body('Ada siswa memiliki data PKL aktif dan tidak dapat dihapus.')
+                                    ->send();
+                            }
+                        }),
                 ]),
 
 
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->action(function (Collection $records) {
+                            $studentsWithInternships = [];
+                            $studentsToDelete = [];
+
+                            foreach ($records as $record) {
+                                if ($record->internships()->count() > 0) {
+                                    $studentsWithInternships[] = $record->name;
+                                } else {
+                                    $studentsToDelete[] = $record->id;
+                                }
+                            }
+
+                            if (count($studentsWithInternships) > 0) {
+                                \Filament\Notifications\Notification::make()
+                                    ->danger()
+                                    ->title('Beberapa siswa tidak dapat dihapus')
+                                    ->body('Siswa berikut memiliki data PKL aktif dan tidak dapat dihapus: ' . implode(', ', $studentsWithInternships))
+                                    ->send();
+                            }
+
+                            if (count($studentsToDelete) > 0) {
+                                Student::whereIn('id', $studentsToDelete)->delete();
+
+                                \Filament\Notifications\Notification::make()
+                                    ->success()
+                                    ->title('Siswa berhasil dihapus')
+                                    ->body(count($studentsToDelete) . ' siswa telah dihapus.')
+                                    ->send();
+                            }
+
+                            return true;
+                        }),
+                    RestoreBulkAction::make(),
+                    Tables\Actions\ForceDeleteBulkAction::make(),
                 ]),
-                DeleteBulkAction::make(),
-                RestoreBulkAction::make(),
-                Tables\Actions\ForceDeleteBulkAction::make(),
             ]);
     }
 

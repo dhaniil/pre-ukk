@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('internships', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();
-            $table->foreignId('industries_id')->constrained('industries')->cascadeOnDelete();
-            $table->foreignId('teacher_id')->constrained('teachers')->cascadeOnDelete();
+            $table->foreignId('student_id')->constrained('students')->restrictOnDelete();
+            $table->foreignId('industries_id')->constrained('industries')->restrictOnDelete();
+            $table->foreignId('teacher_id')->constrained('teachers')->restrictOnDelete();
             $table->date('mulai');
             $table->date('selesai');
             $table->softDeletes();

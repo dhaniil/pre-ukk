@@ -19,4 +19,9 @@ class Industries extends Model
     {
         return $this->belongsTo(Teacher::class, 'guru_pembimbing', 'id');;
     }
+
+    public function internships()
+    {
+        return $this->hasMany(Internship::class);
+    }
 }

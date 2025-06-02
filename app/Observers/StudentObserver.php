@@ -5,6 +5,8 @@ namespace App\Observers;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Validation\ValidationException;
 use Spatie\Permission\Models\Role;
 
 class StudentObserver
@@ -31,5 +33,17 @@ class StudentObserver
                 'email' => $student->email,
             ]);
         }
+    }
+
+    public function deleting(Student $student): bool
+    {
+        if ($student->internships()->count() > 0) {
+            throw ValidationException::withMessages([
+                'student' => 'Tidak bisa menghapus siswa yang memiliki data pkl',
+            ]);
+            return false;
+        }
+
+        return true;
     }
 }

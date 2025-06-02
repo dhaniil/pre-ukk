@@ -7,6 +7,7 @@ use App\Models\Internship;
 use App\Models\Student;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Industries;
+use Illuminate\Support\Facades\DB;
 
 class ReportInternship extends Component
 {
@@ -41,22 +42,39 @@ class ReportInternship extends Component
     public function save()
     {
         $this->validate();
+    
+        DB::beginTransaction();
+        try { 
+            $duration = \Carbon\Carbon::parse($this->mulai)->diffInDays(\Carbon\Carbon::parse($this->selesai));
+            if ($duration < 90) {
+                $this->addError('selesai', 'Durasi PKL minimal 90 hari.');
+                session()->flash('error', 'Durasi PKL minimal 90 hari.');
+                DB::rollBack();
+                return;
+            }
 
-        $student = Student::where('email', Auth::user()->email)->firstOrFail();
-        $industries = Industries::find($this->industriesId);
-        $teacher = $industries->teacher;
-        Internship::create([
-            'student_id' => $student->id,
-            'teacher_id' => $teacher->id,
-            'industries_id' => $this->industriesId,
-            'mulai' => $this->mulai,
-            'selesai' => $this->selesai,
-        ]);
+            $student = Student::where('email', Auth::user()->email)->firstOrFail();
+            $industries = Industries::find($this->industriesId);
+            $teacher = $industries->teacher;
+            Internship::create([
+                'student_id' => $student->id,
+                'teacher_id' => $teacher->id,
+                'industries_id' => $this->industriesId,
+                'mulai' => $this->mulai,
+                'selesai' => $this->selesai,
+            ]);
 
-        session()->flash('message', 'Laporan PKL berhasil disimpan!');
-        $this->closeModal();
-        $this->dispatch('internship-created');
+            DB::commit();
+            session()->flash('message', 'Laporan PKL berhasil disimpan!');
+            $this->closeModal();
+            $this->dispatch('internship-created');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            session()->flash('error', 'Terjadi kesalahan saat menyimpan laporan PKL: ' . $e->getMessage());
+            return;
+        }
     }
+        
 
     public function render()
     {

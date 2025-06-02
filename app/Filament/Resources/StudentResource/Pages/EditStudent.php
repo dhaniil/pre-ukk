@@ -12,8 +12,13 @@ class EditStudent extends EditRecord
 
     protected function getHeaderActions(): array
     {
+        $email = $this->record->email;
+
         return [
-            Actions\DeleteAction::make(),
+            Actions\DeleteAction::make()
+                ->visible(function () {
+                    return !$this->record->internships()->exists();
+                }),
         ];
     }
 }

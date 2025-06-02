@@ -8,6 +8,7 @@ use App\Models\Teacher;
 use Faker\Provider\Text;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -84,11 +85,35 @@ class TeacherResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->visible(fn ($record) => !$record->internships()->exists())
+                    ->before(function ($action, $record) {
+                        if ($record->internships()->exists()) {
+                            $action->cancel();
+                            Notification::make()
+                                ->title('Tidak bisa menghapus guru')
+                                ->body('Guru ini memiliki data PKL yang terkait.')
+                                ->danger()
+                                ->send();
+                        }
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\ForceDeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->before(function (Tables\Actions\DeleteBulkAction $action, $records) {
+                            foreach ($records as $record) {
+                                if ($record->internships()->count() > 0) {
+                                    Notification::make()
+                                        ->danger()
+                                        ->title('Tidak bisa menghapus guru')
+                                        ->body('Guru ini memiliki data PKL yang terkait.')
+                                        ->send();
+                                    $action->cancel();
+                                    return;
+                                }
+                            }
+                        }),
                     Tables\Actions\RestoreBulkAction::make(),
                 ]),
             ]);

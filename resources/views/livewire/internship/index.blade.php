@@ -44,7 +44,7 @@
     </div>
 
     @if ($internships)
-        <div data-aos="fade-up" data-aos-duration="800" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div  class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <!-- Industry Information Section -->
             <div id="internship-info" class="flex flex-col gap-6 border border-blue-100 dark:border-zinc-700/60 rounded-2xl p-6 bg-white dark:bg-zinc-900">
                 <div class="flex gap-4 items-center">

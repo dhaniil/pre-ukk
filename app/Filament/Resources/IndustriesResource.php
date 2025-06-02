@@ -5,14 +5,18 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\IndustriesResource\Pages;
 use App\Filament\Resources\IndustriesResource\RelationManagers;
 use App\Models\Industries;
+use Dom\Text;
+use Filament\Tables\Actions\DeleteAction;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Notifications\Notification;
 
 class IndustriesResource extends Resource
 {
@@ -69,17 +73,65 @@ class IndustriesResource extends Resource
                 ->searchable(),
                 TextColumn::make('teacher.name')
                 ->searchable(),
+                TextColumn::make('internships_count')
+                ->label('Internships')
+                ->badge()
+                ->counts('internships')
+                ->color('primary')
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                DeleteAction::make()
+                    ->before(function (DeleteAction $action, Industries $record) {
+                        if($record->internships()->exists()) {
+                            Notification::make()
+                                ->title("Industri {$record->name} tidak bisa dihapus")
+                                ->body('Industri ini memiliki data PKL yang terkait.')
+                                ->danger()
+                                ->send();
+                            $action->cancel();
+                            return false;
+                        }
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\ForceDeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->action(function (\Illuminate\Support\Collection $records) {
+                            $industriesWithInternships = [];
+                            $industriesToDelete = [];
+                            
+                            foreach ($records as $record) {
+                                if ($record->internships()->exists()) {
+                                    $industriesWithInternships[] = $record->name;
+                                } else {
+                                    $industriesToDelete[] = $record->id;
+                                }
+                            }
+                            
+                            if (count($industriesWithInternships) > 0) {
+                                Notification::make()
+                                    ->danger()
+                                    ->title('Beberapa industri tidak bisa dihapus')
+                                    ->body('Industri berikut memiliki data PKL terkait: ' . implode(', ', $industriesWithInternships))
+                                    ->send();
+                            }
+                            
+                            if (count($industriesToDelete) > 0) {
+                                Industries::whereIn('id', $industriesToDelete)->delete();
+                                
+                                Notification::make()
+                                    ->success()
+                                    ->title('Industri berhasil dihapus')
+                                    ->body(count($industriesToDelete) . ' industri telah dihapus.')
+                                    ->send();
+                            }
+                            
+                            return true;
+                        }),
                     Tables\Actions\RestoreBulkAction::make(),
                 ]),
             ]);

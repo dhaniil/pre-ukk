@@ -35,6 +35,7 @@
                             </label>
                             <flux:select wire:model="industriesId" placeholder="Pilih temapt PKL">
                                 @foreach ($industries as $industry)
+                            
                                     <flux:select.option value="{{ $industry->id }}">{{ $industry->name }}</flux:select.option>
                                 @endforeach
                             </flux:select>
